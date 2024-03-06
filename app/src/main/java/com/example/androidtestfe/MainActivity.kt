@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.androidtestfe.ui.auth.AuthScreen
 import com.example.androidtestfe.ui.theme.AndroidTestFETheme
+import com.example.androidtestfe.utils.NavigationController
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,19 +30,11 @@ class MainActivity : ComponentActivity() {
                 ) {
                     Scaffold { innerPadding ->
                         Column(modifier = Modifier.padding(innerPadding)) {
-                            AuthScreen()
+                           NavigationController()
                         }
                     }
                 }
             }
         }
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    AndroidTestFETheme {
-        AuthScreen()
     }
 }
