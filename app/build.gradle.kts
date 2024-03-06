@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("com.google.dagger.hilt.android")
     kotlin("kapt")
+    kotlin("plugin.serialization")
 }
 
 android {
@@ -75,4 +76,24 @@ dependencies {
     kapt(Depedencies.hilt_version_kapt)
     implementation(Depedencies.hilt_navigation_compose)
     implementation(Depedencies.navigation_compose)
+
+    //retrofit
+    implementation(Depedencies.retrofit2)
+    implementation(Depedencies.retrofit2_converter_gson)
+
+    //room
+    implementation(Depedencies.room_library)
+    annotationProcessor(Depedencies.room_compiler)
+    kapt(Depedencies.room_kapt_compiler)
+    implementation(Depedencies.room_ktx)
+
+    //test
+    testImplementation (Depedencies.mockK_version)
+    testImplementation (Depedencies.mockK_android)
+    testImplementation (Depedencies.mockK_agent)
+    testImplementation(Depedencies.jupiter_library)
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0")
+    testImplementation ("org.robolectric:robolectric:4.9")
+    implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1")
+    implementation ("com.squareup.okhttp3:mockwebserver:3.8.1")
 }
