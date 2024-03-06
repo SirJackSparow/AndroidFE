@@ -5,11 +5,11 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.androidtestfe.ui.auth.AuthScreen
-
+import com.example.androidtestfe.ui.listscreen.ListScreen
 
 sealed class Screen(val route: String) {
-    object Auth : Screen("Auth")
-    object List : Screen("List")
+    data object Auth : Screen("Auth")
+    data object List : Screen("List")
 }
 
 @Composable
@@ -21,8 +21,7 @@ fun NavigationController() {
             AuthScreen(navController)
         }
         composable(Screen.List.route) {
-
+            ListScreen(navController)
         }
     }
 }
-

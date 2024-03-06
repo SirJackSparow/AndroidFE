@@ -45,6 +45,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.example.androidtestfe.R
+import com.example.androidtestfe.utils.Screen
 
 @Composable
 fun AuthScreen(navController: NavHostController) {
@@ -105,9 +106,8 @@ fun AuthScreen(navController: NavHostController) {
 
         AuthButton(
             text = if (isLogin) stringResource(id = R.string.login) else stringResource(id = R.string.register_instead),
-            onClick = {
+            onClick = { navController.navigate(Screen.List.route) }
 
-            }
         )
 
         Spacer(modifier = Modifier.weight(1f))
