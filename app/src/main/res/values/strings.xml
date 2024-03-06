@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">AndroidTestFE</string>
+    <string name="create_account">Create Account</string>
+    <string name="already_have_account">Already have an account ?</string>
+    <string name="register_instead">Register</string>
+    <string name="login_instead">Login</string>
+    <string name="email">E-mail</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+</resources>

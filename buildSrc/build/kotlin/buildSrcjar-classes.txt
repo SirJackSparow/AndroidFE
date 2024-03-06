@@ -1,0 +1,1 @@
+/Users/fendy24/AndroidStudioProjects/AndroidTestFE/buildSrc/build/classes/kotlin/main/Depedencies.class:/Users/fendy24/AndroidStudioProjects/AndroidTestFE/buildSrc/build/classes/kotlin/main/Version.class
