@@ -1,6 +1,6 @@
 package com.example.androidtestfe.di
 
-import com.example.androidtestfe.data.network.GithubApi
+import com.example.androidtestfe.data.network.Api
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -23,13 +23,13 @@ object NetworksModule {
 
     @Provides
     @Singleton
-    fun retrofitInstance(): GithubApi {
+    fun retrofitInstance(): Api {
         return Retrofit.Builder()
             .baseUrl("https://api.github.com")
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(GithubApi::class.java)
+            .create(Api::class.java)
     }
 
 }
