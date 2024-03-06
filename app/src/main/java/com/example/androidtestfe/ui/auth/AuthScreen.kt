@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.rounded.FavoriteBorder
@@ -48,9 +49,11 @@ import com.example.androidtestfe.R
 
 @Composable
 fun AuthScreen() {
+
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var isPasswordVisible by remember { mutableStateOf(true) }
+    var isLogin by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -84,13 +87,17 @@ fun AuthScreen() {
             onValueChange = { password = it },
             label = stringResource(id = R.string.password),
             leadingIcon = Icons.Default.Lock,
-            isPassword = true,
+            isPassword = isPasswordVisible,
             trailingIcon = {
                 IconButton(onClick = { isPasswordVisible = !isPasswordVisible }) {
-                    Icon(
-                        imageVector = if (isPasswordVisible) Icons.Rounded.FavoriteBorder else Icons.Default.FavoriteBorder,
+                    if (isPasswordVisible) Icon(
+                        painter = painterResource(id = R.drawable.baseline_visibility_off_24),
                         contentDescription = null
-                    )
+                    ) else
+                        Icon(
+                            painter = painterResource(id = R.drawable.baseline_remove_red_eye_24),
+                            contentDescription = null
+                        )
                 }
             }
         )
@@ -98,18 +105,18 @@ fun AuthScreen() {
         Spacer(modifier = Modifier.height(25.dp))
 
         AuthButton(
-            text = stringResource(id = R.string.login),
+            text = if (isLogin) stringResource(id = R.string.login) else stringResource(id = R.string.register_instead),
             onClick = {
-                // Perform login logic here
+
             }
         )
 
         Spacer(modifier = Modifier.weight(1f))
 
         AuthToggle(
-            isLogin = false,
+            isLogin = isLogin,
             onToggle = {
-
+                isLogin = !isLogin
             }
         )
     }
