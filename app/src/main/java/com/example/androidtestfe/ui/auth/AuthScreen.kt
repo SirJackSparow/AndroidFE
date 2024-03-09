@@ -16,11 +16,14 @@ import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextFieldDefaults
@@ -54,6 +57,7 @@ fun AuthScreen(navController: NavHostController) {
     var password by remember { mutableStateOf("") }
     var isPasswordVisible by remember { mutableStateOf(true) }
     var isLogin by remember { mutableStateOf(false) }
+    var checked by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier
@@ -101,6 +105,14 @@ fun AuthScreen(navController: NavHostController) {
                 }
             }
         )
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+            Switch(checked = checked, onCheckedChange = { checked = !checked })
+
+            Text(text = "Admin", modifier = Modifier.padding(vertical = 10.dp))
+        }
 
         Spacer(modifier = Modifier.height(25.dp))
 

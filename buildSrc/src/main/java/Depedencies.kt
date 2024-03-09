@@ -23,7 +23,7 @@ object Depedencies {
 }
 
 object Version {
-    const val version_hilt = "2.45"
+    const val version_hilt = "2.51"
     const val compose_nav_hilt = "1.0.0"
     const val retrofit_version = "2.9.0"
     const val mockK_version = "1.13.3"

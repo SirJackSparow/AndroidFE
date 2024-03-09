@@ -8,8 +8,8 @@ import com.example.androidtestfe.ui.auth.AuthScreen
 import com.example.androidtestfe.ui.listscreen.ListScreen
 
 sealed class Screen(val route: String) {
-    data object Auth : Screen("Auth")
-    data object List : Screen("List")
+     data object Auth : Screen("Auth")
+     data object List : Screen("List")
 }
 
 @Composable

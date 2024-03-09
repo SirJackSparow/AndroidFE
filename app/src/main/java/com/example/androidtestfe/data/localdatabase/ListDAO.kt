@@ -9,9 +9,9 @@ import com.example.androidtestfe.data.localdatabase.model.ListModel
 @Dao
 interface ListDAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(listModel: ListModel)
+    fun insert(listModel: ListModel)
 
-    @Query("select * from ListModel")
-    suspend fun getAllData(): List<ListModel>
+    @Query("SELECT * FROM ListModel")
+    fun getAllData(): List<ListModel>
 
 }

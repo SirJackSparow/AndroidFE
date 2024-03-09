@@ -22,7 +22,6 @@ object LocalDatabaseModule {
             .build()
     }
 
-
     @Provides
     fun provideDao(myDatabase: LocalDataBase) : ListDAO {
         return myDatabase.daoDatabase()

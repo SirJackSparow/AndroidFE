@@ -3,7 +3,6 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("com.google.dagger.hilt.android")
     kotlin("kapt")
-    kotlin("plugin.serialization")
 }
 
 android {
@@ -62,7 +61,6 @@ dependencies {
     implementation("androidx.compose.ui:ui-graphics")
     implementation("androidx.compose.ui:ui-tooling-preview")
     implementation("androidx.compose.material3:material3")
-    implementation("com.google.dagger:hilt-android:2.45")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
@@ -92,8 +90,12 @@ dependencies {
     testImplementation (Depedencies.mockK_android)
     testImplementation (Depedencies.mockK_agent)
     testImplementation(Depedencies.jupiter_library)
-    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.0")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.7.1")
     testImplementation ("org.robolectric:robolectric:4.9")
     implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1")
     implementation ("com.squareup.okhttp3:mockwebserver:3.8.1")
+}
+
+kapt {
+    correctErrorTypes = true
 }
