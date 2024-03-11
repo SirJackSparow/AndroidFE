@@ -72,8 +72,6 @@ fun AuthScreen(navController: NavHostController, vm: AuthScreenViewModel = hiltV
 
     LaunchedEffect(uiState) {
         when (uiState) {
-            UserUiState.None -> {}
-
             UserUiState.Success -> {
                 navController.navigate(Screen.List.route)
                 vm.uiState.value = UserUiState.None
@@ -82,7 +80,6 @@ fun AuthScreen(navController: NavHostController, vm: AuthScreenViewModel = hiltV
             UserUiState.Fail -> {
                 Toast.makeText(context, "Fail", Toast.LENGTH_SHORT).show()
             }
-
             else -> {}
         }
     }

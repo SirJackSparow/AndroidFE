@@ -1,5 +1,7 @@
 package com.example.androidtestfe.di
 
+import com.example.androidtestfe.data.repositories.GetListRepo
+import com.example.androidtestfe.data.repositories.GetListRepoImpl
 import com.example.androidtestfe.data.repositories.UserRepo
 import com.example.androidtestfe.data.repositories.UserRepoImpl
 import dagger.Binds
@@ -15,4 +17,8 @@ abstract class RepositoriesModules {
     @Binds
     @Singleton
     abstract fun userRepository(userRepoImpl: UserRepoImpl) : UserRepo
+
+    @Binds
+    @Singleton
+    abstract fun getListData(getListRepoImpl: GetListRepoImpl) : GetListRepo
 }

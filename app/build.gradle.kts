@@ -97,6 +97,8 @@ dependencies {
     testImplementation ("org.robolectric:robolectric:4.9")
     implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.4.1")
     implementation ("com.squareup.okhttp3:mockwebserver:3.8.1")
+
+    implementation("io.coil-kt:coil-compose:2.3.0")
 }
 
 kapt {

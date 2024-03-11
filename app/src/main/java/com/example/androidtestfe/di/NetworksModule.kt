@@ -25,7 +25,7 @@ object NetworksModule {
     @Singleton
     fun retrofitInstance(): Api {
         return Retrofit.Builder()
-            .baseUrl("https://jsonplaceholder.typicode.com/")
+            .baseUrl("https://jsonplaceholder.typicode.com")
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
