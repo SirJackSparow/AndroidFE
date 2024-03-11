@@ -14,4 +14,7 @@ interface ListDAO {
     @Query("SELECT * FROM ListModel")
     fun getAllData(): List<ListModel>
 
+    @Query("select * from ListModel where email = :email and password = :password")
+    fun loginUser(email: String, password: String) :ListModel
+
 }

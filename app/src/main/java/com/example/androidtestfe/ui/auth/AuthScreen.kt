@@ -1,6 +1,6 @@
 package com.example.androidtestfe.ui.auth
 
-import androidx.compose.foundation.Image
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,11 +13,10 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.DropdownMenu
-import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -28,15 +27,17 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
@@ -45,19 +46,46 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.LottieConstants
+import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.androidtestfe.R
+import com.example.androidtestfe.data.localdatabase.model.ListModel
 import com.example.androidtestfe.utils.Screen
 
 @Composable
-fun AuthScreen(navController: NavHostController) {
+fun AuthScreen(navController: NavHostController, vm: AuthScreenViewModel = hiltViewModel()) {
 
     var email by remember { mutableStateOf("") }
+    var userName by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var isPasswordVisible by remember { mutableStateOf(true) }
     var isLogin by remember { mutableStateOf(false) }
     var checked by remember { mutableStateOf(false) }
+    val context = LocalContext.current
+
+    val uiState by vm.uiState.observeAsState()
+
+    LaunchedEffect(uiState) {
+        when (uiState) {
+            UserUiState.None -> {}
+
+            UserUiState.Success -> {
+                navController.navigate(Screen.List.route)
+                vm.uiState.value = UserUiState.None
+            }
+
+            UserUiState.Fail -> {
+                Toast.makeText(context, "Fail", Toast.LENGTH_SHORT).show()
+            }
+
+            else -> {}
+        }
+    }
 
     Column(
         modifier = Modifier
@@ -67,13 +95,7 @@ fun AuthScreen(navController: NavHostController) {
 
         Spacer(modifier = Modifier.height(32.dp))
 
-        Image(
-            painter = painterResource(id = R.drawable.ic_launcher_background),
-            contentDescription = null,
-            modifier = Modifier
-                .size(120.dp)
-                .clip(MaterialTheme.shapes.medium)
-        )
+        ComposeLottie(modifier = Modifier.size(200.dp))
 
         Spacer(modifier = Modifier.height(32.dp))
 
@@ -106,20 +128,50 @@ fun AuthScreen(navController: NavHostController) {
             }
         )
 
-        Spacer(modifier = Modifier.height(16.dp))
+        if (!isLogin) {
 
-        Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
-            Switch(checked = checked, onCheckedChange = { checked = !checked })
+            Spacer(modifier = Modifier.height(16.dp))
 
-            Text(text = "Admin", modifier = Modifier.padding(vertical = 10.dp))
+            AuthTextField(
+                value = userName,
+                onValueChange = { userName = it },
+                label = stringResource(id = R.string.username),
+                leadingIcon = Icons.Default.Face,
+                isPassword = false,
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Switch(checked = checked, onCheckedChange = { checked = !checked })
+
+                Text(text = "Admin", modifier = Modifier.padding(vertical = 10.dp))
+            }
         }
 
         Spacer(modifier = Modifier.height(25.dp))
 
         AuthButton(
             text = if (isLogin) stringResource(id = R.string.login) else stringResource(id = R.string.register_instead),
-            onClick = { navController.navigate(Screen.List.route) }
-
+            onClick = {
+                if (!isLogin) {
+                    vm.addUser(
+                        model = ListModel(
+                            username = userName,
+                            email = email,
+                            password = password,
+                            role = if (checked) "Admin" else "User"
+                        )
+                    )
+                   isLogin = !isLogin
+                   password = ""
+                } else {
+                    vm.login(email = email, password = password)
+                }
+            }
         )
 
         Spacer(modifier = Modifier.weight(1f))
@@ -229,6 +281,20 @@ fun AuthToggle(
             )
         }
     }
+}
+
+@Composable
+fun ComposeLottie(modifier: Modifier) {
+    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.logins))
+
+    LottieAnimation(
+        modifier = modifier,
+        composition = composition,
+        iterations = LottieConstants.IterateForever,
+        restartOnPlay = true,
+        isPlaying = true
+    )
+
 }
 
 @Preview(showBackground = true)

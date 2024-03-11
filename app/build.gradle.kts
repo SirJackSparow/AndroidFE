@@ -68,6 +68,7 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+    implementation("com.airbnb.android:lottie-compose:6.0.1")
 
     //hilt
     implementation(Depedencies.hilt_version)
@@ -84,6 +85,8 @@ dependencies {
     annotationProcessor(Depedencies.room_compiler)
     kapt(Depedencies.room_kapt_compiler)
     implementation(Depedencies.room_ktx)
+
+    implementation ("androidx.compose.runtime:runtime-livedata:1.6.3")
 
     //test
     testImplementation (Depedencies.mockK_version)

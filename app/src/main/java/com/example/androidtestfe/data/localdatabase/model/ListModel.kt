@@ -5,10 +5,10 @@ import androidx.room.PrimaryKey
 
 @Entity
 data class ListModel(
-    @PrimaryKey
-    val id: String,
-    val title: String,
-    val url: String,
-    val thumbnailUrl: String,
+    @PrimaryKey(autoGenerate = true)
+    val id: Int? = null,
+    val username: String,
+    val email: String,
+    val password: String,
     val role: String
 )

@@ -15,7 +15,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.example.androidtestfe.ui.auth.AuthScreen
 import com.example.androidtestfe.ui.theme.AndroidTestFETheme
 import com.example.androidtestfe.utils.NavigationController
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
