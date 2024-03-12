@@ -1,4 +1,4 @@
-package com.example.androidtestfe.ui.listscreen
+package com.example.androidtestfe.ui.lists
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

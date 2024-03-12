@@ -33,7 +33,7 @@ class AuthScreenViewModel @Inject constructor(
                 val user = getUserUseCase.login(email, password)
                 if (user.id != null) {
                     withContext(Dispatchers.Main) {
-                        _uiState.value = UserUiState.Success
+                        _uiState.value = UserUiState.Success(user)
                     }
                     return@launch
                 }
@@ -48,6 +48,6 @@ class AuthScreenViewModel @Inject constructor(
 
 sealed class UserUiState {
     object None : UserUiState()
-    object Success : UserUiState()
+    data class Success(val listModel: ListModel) : UserUiState()
     object Fail : UserUiState()
 }

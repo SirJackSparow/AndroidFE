@@ -1,9 +1,7 @@
 @file:OptIn(ExperimentalMaterial3Api::class)
 
-package com.example.androidtestfe.ui.listscreen
+package com.example.androidtestfe.ui.lists
 
-import android.util.Log
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,6 +18,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -46,7 +45,11 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.example.androidtestfe.data.network.model.ListModelItem
-import com.example.androidtestfe.ui.listscreen.ListState.*
+import com.example.androidtestfe.ui.lists.ListState.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -83,14 +86,8 @@ private fun ListContent(vm: ListViewModel = hiltViewModel()) {
 
     LaunchedEffect(uiState) {
         when (val data = uiState) {
-            is Success -> {
-                itemss = data.data
-                Log.e("TAG", itemss.size.toString() )
-            }
-
-            is Failed -> {
-                Log.e("TAG", itemss.size.toString() )
-            }
+            is Success -> itemss = data.data
+            is Failed -> {}
             else -> {}
         }
     }
@@ -99,9 +96,36 @@ private fun ListContent(vm: ListViewModel = hiltViewModel()) {
         items(itemss) { item ->
             ListItem(user = item)
         }
+
+        item {
+            if (isLoading) {
+                LoadingIndicator()
+            } else {
+                val lastIndex = itemss.size - 1
+
+                if (lastIndex >= 0) {
+                    if (!isLoading) {
+                        CoroutineScope(Dispatchers.IO).launch {
+                            isLoading = true
+                            delay(1000)
+                            vm.getDataList()
+                        }
+                    }
+                }
+
+            }
+        }
     }
+}
 
-
+@Composable
+fun LoadingIndicator() {
+    CircularProgressIndicator(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+            .height(100.dp)
+    )
 }
 
 @Composable

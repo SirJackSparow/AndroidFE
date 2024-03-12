@@ -71,15 +71,20 @@ fun AuthScreen(navController: NavHostController, vm: AuthScreenViewModel = hiltV
     val uiState by vm.uiState.observeAsState()
 
     LaunchedEffect(uiState) {
-        when (uiState) {
-            UserUiState.Success -> {
-                navController.navigate(Screen.List.route)
+        when (val data = uiState) {
+            is UserUiState.Success -> {
+                if (data.listModel.role == "User") {
+                    navController.navigate(Screen.List.route)
+                } else {
+                    navController.navigate("${Screen.Admin.route}/${data.listModel.id}/${data.listModel.username}/${data.listModel.email}/${data.listModel.role}")
+                }
                 vm.uiState.value = UserUiState.None
             }
 
-            UserUiState.Fail -> {
+            is UserUiState.Fail -> {
                 Toast.makeText(context, "Fail", Toast.LENGTH_SHORT).show()
             }
+
             else -> {}
         }
     }
@@ -163,8 +168,8 @@ fun AuthScreen(navController: NavHostController, vm: AuthScreenViewModel = hiltV
                             role = if (checked) "Admin" else "User"
                         )
                     )
-                   isLogin = !isLogin
-                   password = ""
+                    isLogin = !isLogin
+                    password = ""
                 } else {
                     vm.login(email = email, password = password)
                 }
